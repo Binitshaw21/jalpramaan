@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design System Tokens ─── */
+:root {
+  --fs-hero: clamp(3rem, 7vw, 6.5rem);
+  --fs-display: clamp(1.8rem, 3.5vw, 2.8rem);
+  --fs-heading: clamp(1.2rem, 2vw, 1.6rem);
+  --radius-bento: 24px;
+  --radius-card: 18px;
+  --glass-bg: rgba(255,255,255,0.65);
+  --glass-border: rgba(255,255,255,0.85);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --clay-highlight: inset 0 1.5px 0 rgba(255,255,255,0.9);
+  --clay-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ─── Base ─── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f8faff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Brutalist Hero Typography ─── */
+.font-hero {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--fs-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* ─── Liquid Glass Card ─── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-bento);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.5) 0%,
+    rgba(255,255,255,0.1) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.glass-card:hover::before { opacity: 1; }
+
+/* ─── Shine Sweep on Hover ─── */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255,255,255,0.55) 50%,
+    transparent 70%
+  );
+  transform: skewX(-15deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.shine-sweep:hover::after { left: 150%; }
+
+/* ─── Claymorphism Buttons ─── */
+.clay-btn {
+  box-shadow: var(--clay-highlight), var(--clay-shadow);
+  border-radius: 14px;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.12s ease;
+}
+.clay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--clay-highlight),
+              0 8px 24px rgba(0,0,0,0.16), 0 2px 6px rgba(0,0,0,0.10);
+}
+.clay-btn:active {
+  transform: translateY(1px);
+  box-shadow: var(--clay-highlight),
+              0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ─── Neomorphic Input ─── */
+.neo-input {
+  background: #f0f4ff;
+  border: 1.5px solid rgba(255,255,255,0.9);
+  box-shadow: inset 2px 3px 8px rgba(166,180,200,0.25),
+              inset -1px -1px 4px rgba(255,255,255,0.8);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.neo-input:focus {
+  outline: none;
+  border-color: #00685f;
+  box-shadow: inset 2px 3px 8px rgba(166,180,200,0.2),
+              0 0 0 3px rgba(0,104,95,0.15);
+}
+
+/* ─── Bento Grid ─── */
+.bento-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* ─── Pulsing Glow Pin ─── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(239,68,68,0.6); }
+  50% { box-shadow: 0 0 20px 6px rgba(239,68,68,0.3); }
+}
+.pin-red { animation: glow-pulse 2s ease-in-out infinite; }
+
+@keyframes glow-pulse-blue {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(59,130,246,0.6); }
+  50% { box-shadow: 0 0 20px 6px rgba(59,130,246,0.3); }
+}
+.pin-blue { animation: glow-pulse-blue 2s ease-in-out infinite; }
+
+/* ─── Animated Worker Marker ─── */
+@keyframes marker-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.05); }
+}
+.worker-marker { animation: marker-bounce 1.5s ease-in-out infinite; }
+
+/* ─── Tracking Timeline ─── */
+.timeline-connector {
+  width: 2px;
+  background: linear-gradient(to bottom, #00685f, #e2e8f0);
+  flex-shrink: 0;
+}
+
+/* ─── Blob Animations ─── */
+@keyframes blob {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.animate-blob { animation: blob 10s infinite ease-in-out; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+/* ─── Fade In Up ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ─── Cyber Terminal Text ─── */
+.cyber-mono {
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Spinning ring ─── */
+@keyframes spin-ring {
+  to { transform: rotate(360deg); }
+}
+.spin-ring {
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin-ring 0.9s linear infinite;
+}
+
+/* ─── MapLibre Overrides (no API key, fully open source) ─── */
+.maplibregl-ctrl-logo { display: none !important; }
+.maplibregl-ctrl-attrib { opacity: 0.45 !important; font-size: 10px !important; }
+.maplibregl-ctrl-attrib-button { display: none !important; }
+.maplibregl-ctrl-attrib.maplibregl-compact { padding: 2px 5px !important; }
+/* Also keep Mapbox overrides for legacy Leaflet map */
+.mapboxgl-ctrl-logo { display: none !important; }
+.mapboxgl-ctrl-attrib { opacity: 0.45 !important; font-size: 10px !important; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #bcc9c6; border-radius: 99px; }
+
+/* ─── Page Transition ─── */
+.page-enter { opacity: 0; transform: scale(0.97); }
+.page-enter-active { opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
+.page-exit { opacity: 1; transform: scale(1); }
+.page-exit-active { opacity: 0; transform: scale(1.03); transition: all 0.3s ease; }
+
+@layer utilities {
+  .input-halo:focus-within {
+    box-shadow: 0 0 0 3px rgba(0,104,95,0.2);
+  }
+}
