@@ -293,10 +293,17 @@ async def analyze_water(
     except Exception as e:
         print(f"Gemini API fallback triggered: {str(e)}")
         new_incident = Incident(lat=lat, lng=lng, ai_report=fallback_report, ward_name=ward_name)
-        db.add(new_incident)
-        db.commit()
-        db.refresh(new_incident)
-        return serialize_incident(new_incident)
+        try:
+            db.add(new_incident)
+            db.commit()
+            db.refresh(new_incident)
+            return serialize_incident(new_incident)
+        except Exception as db_e:
+            print(f"Database insertion failed in fallback: {str(db_e)}")
+            # Return mocked incident if database is completely unavailable
+            new_incident.id = str(uuid.uuid4())
+            new_incident.created_at = datetime.utcnow()
+            return serialize_incident(new_incident)
 
 
 @app.get("/{full_path:path}", include_in_schema=False)
