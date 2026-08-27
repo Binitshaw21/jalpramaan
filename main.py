@@ -119,7 +119,7 @@ class IncidentResponse(BaseModel):
 from typing import Literal
 
 class IncidentStatusUpdate(BaseModel):
-    status: Literal["Verify", "Under Processing", "Dispatch", "Complete", "Reject"]
+    status: Literal["Report Submitted", "Verify", "Under Processing", "Dispatch", "Complete", "Reject"]
     admin_notes: Optional[str] = None
 
 class MyComplaintsRequest(BaseModel):
@@ -306,13 +306,5 @@ async def analyze_water(
             return serialize_incident(new_incident)
 
 
-@app.get("/{full_path:path}", include_in_schema=False)
-async def serve_spa(full_path: str):
-    if full_path.startswith("api"):
-        raise HTTPException(status_code=404, detail="Not found")
-
-    index_path = FRONTEND_DIST / "index.html"
-    if index_path.exists():
-        return FileResponse(index_path, media_type="text/html")
-
-    return {"message": "JalPramaan backend is running. Frontend build not generated yet."}
+# SPA and Root routing is now handled natively by Vercel via vercel.json
+# No catch-all routes here to prevent 405 error masking.
