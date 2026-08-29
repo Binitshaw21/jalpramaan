@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-pg8000
-pydantic
-python-multipart
-google-genai
-geoalchemy2
-python-dotenv

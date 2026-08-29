@@ -1,9 +1,9 @@
 fastapi
-uvicorn[standard]
-python-dotenv
-pydantic
-google-genai
+uvicorn
 sqlalchemy
-psycopg2-binary
-geoalchemy2
+psycopg[binary]
+pydantic
 python-multipart
+google-genai
+geoalchemy2
+python-dotenv
