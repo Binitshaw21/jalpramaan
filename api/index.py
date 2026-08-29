@@ -56,9 +56,9 @@ if FRONTEND_DIST.exists():
 
 raw_db_url = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/jalpramaan")
 if raw_db_url.startswith("postgresql://"):
-    DATABASE_URL = raw_db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    DATABASE_URL = raw_db_url.replace("postgresql://", "postgresql+pg8000://", 1)
 elif raw_db_url.startswith("postgres://"):
-    DATABASE_URL = raw_db_url.replace("postgres://", "postgresql+psycopg://", 1)
+    DATABASE_URL = raw_db_url.replace("postgres://", "postgresql+pg8000://", 1)
 else:
     DATABASE_URL = raw_db_url
 
