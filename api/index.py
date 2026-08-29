@@ -39,7 +39,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = genai.Client()
+gemini_api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=gemini_api_key) if gemini_api_key else None
 DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
 
 # BASE_DIR is now the project root, one level above the api directory
@@ -255,6 +256,12 @@ async def analyze_water(
         4. Determine if this indicates a pipeline breach.
         """
 
+        if not client:
+            raise ValueError("Gemini API key is missing. Skipping AI analysis.")
+
+        # Get location text using Mapbox geocoding via standard HTTP call
+        # We handle this manually since Mapbox SDK might be heavy or not fully async
+        import urllib.request
         contents = [types.Part.from_text(text=system_instruction)]
 
         if image is not None:
