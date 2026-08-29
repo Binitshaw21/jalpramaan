@@ -55,7 +55,7 @@ if FRONTEND_DIST.exists():
 # =====================================================================
 
 raw_db_url = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/jalpramaan")
-DATABASE_URL = raw_db_url
+DATABASE_URL = raw_db_url.strip()
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
